@@ -12,7 +12,6 @@ export default function User() {
       }}
     >
       <Avatar
-        src="invalid-url.jpg"
         sx={{
           width: 48,
           height: 48,

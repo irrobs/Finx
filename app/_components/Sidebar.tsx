@@ -31,6 +31,7 @@ export default function Sidebar() {
   return (
     <Stack
       sx={{
+        position: "fixed",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",

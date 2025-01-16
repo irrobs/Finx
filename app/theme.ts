@@ -10,6 +10,12 @@ const theme = createTheme({
       dark: "#007fce",
       contrastText: "#fff",
     },
+    success: {
+      main: "#59CB1C",
+    },
+    error: {
+      main: "#CB451C",
+    },
   },
 });
 
