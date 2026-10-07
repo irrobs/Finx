@@ -14,7 +14,7 @@ public class MovimentacaoFinanceira {
     private String descricao;
     private LocalDate data;
     private Double valor;
-    private String Categoria; //TODO: Mudar tipo para Categoria quando for criado o Enum
+    private String categoria; //TODO: Mudar tipo para Categoria quando for criado o Enum
 
     public MovimentacaoFinanceira() {
     }
@@ -24,7 +24,7 @@ public class MovimentacaoFinanceira {
         this.descricao = descricao;
         this.data = data;
         this.valor = valor;
-        Categoria = categoria;
+        this.categoria = categoria;
     }
 
     public Long getId() {
@@ -60,10 +60,10 @@ public class MovimentacaoFinanceira {
     }
 
     public String getCategoria() {
-        return Categoria;
+        return categoria;
     }
 
     public void setCategoria(String categoria) {
-        Categoria = categoria;
+        this.categoria = categoria;
     }
 }

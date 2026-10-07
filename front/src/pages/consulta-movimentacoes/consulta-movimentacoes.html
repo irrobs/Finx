@@ -1,0 +1,62 @@
+<main class="page">
+  <section class="content" aria-labelledby="page-title">
+    <header class="page-header">
+      <div>
+        <span class="eyebrow">VISÃO GERAL</span>
+        <h1 id="page-title">Movimentações financeiras</h1>
+        <p>Acompanhe todas as entradas e saídas registradas.</p>
+      </div>
+      <button type="button" class="refresh-button" (click)="carregarMovimentacoes()" [disabled]="carregando">
+        Atualizar
+      </button>
+    </header>
+
+    <div *ngIf="carregando" class="state-card" role="status">
+      Carregando movimentações...
+    </div>
+
+    <div *ngIf="mensagemErro" class="state-card error-state" role="alert">
+      <p>{{ mensagemErro }}</p>
+      <button type="button" class="retry-button" (click)="carregarMovimentacoes()">Tentar novamente</button>
+    </div>
+
+    <div *ngIf="!carregando && !mensagemErro && movimentacoes.length === 0" class="state-card empty-state">
+      <span class="empty-icon" aria-hidden="true">↗</span>
+      <h2>Nenhuma movimentação ainda</h2>
+      <p>As movimentações cadastradas aparecerão aqui.</p>
+    </div>
+
+    <section
+      *ngIf="!carregando && !mensagemErro && movimentacoes.length > 0"
+      class="table-card"
+      aria-label="Lista de movimentações"
+    >
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col">Descrição</th>
+              <th scope="col">Categoria</th>
+              <th scope="col">Data</th>
+              <th scope="col" class="amount-heading">Valor</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let movimentacao of movimentacoes">
+              <td class="description-cell">
+                <span class="description-mark" aria-hidden="true">↗</span>
+                {{ movimentacao.descricao }}
+              </td>
+              <td><span class="category">{{ movimentacao.categoria }}</span></td>
+              <td>{{ movimentacao.data | date: 'dd/MM/yyyy' }}</td>
+              <td class="amount">{{ movimentacao.valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <footer class="table-footer">
+        {{ movimentacoes.length }} {{ movimentacoes.length === 1 ? 'movimentação encontrada' : 'movimentações encontradas' }}
+      </footer>
+    </section>
+  </section>
+</main>
