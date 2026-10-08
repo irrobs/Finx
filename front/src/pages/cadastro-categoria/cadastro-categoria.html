@@ -1,0 +1,46 @@
+<main class="page">
+  <section class="card" aria-labelledby="page-title">
+    <header class="card-header">
+      <span class="eyebrow">FINANÇAS</span>
+      <h1 id="page-title">Nova categoria</h1>
+      <p>Cadastre categorias para organizar suas movimentações financeiras.</p>
+    </header>
+
+    <form #form="ngForm" (ngSubmit)="salvar(form)">
+      <div class="field">
+        <label for="nome">Nome</label>
+        <input
+          id="nome"
+          name="nome"
+          type="text"
+          placeholder="Ex.: Moradia"
+          [(ngModel)]="categoria.nome"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label for="tipo">Tipo</label>
+        <select id="tipo" name="tipo" [(ngModel)]="categoria.tipo" required>
+          <option value="" disabled>Selecione o tipo</option>
+          <option value="Renda">Renda</option>
+          <option value="Despesa">Despesa</option>
+        </select>
+      </div>
+
+      <p
+        class="feedback"
+        [class.feedback-error]="erro"
+        role="status"
+        aria-live="polite"
+        *ngIf="mensagem"
+      >
+        {{ mensagem }}
+      </p>
+
+      <button type="submit" [disabled]="form.invalid || enviando">
+        {{ enviando ? 'Salvando...' : 'Salvar categoria' }}
+      </button>
+    </form>
+  </section>
+</main>

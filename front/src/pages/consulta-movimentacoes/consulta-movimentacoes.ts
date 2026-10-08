@@ -1,7 +1,7 @@
 import { CurrencyPipe, DatePipe, NgFor, NgIf, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 
 registerLocaleData(localePt);
 
@@ -10,7 +10,11 @@ interface Movimentacao {
   descricao: string;
   data: string;
   valor: number;
-  categoria: string;
+  categoria: {
+    id: number;
+    nome: string;
+    tipo: string;
+  };
 }
 
 @Component({
@@ -21,6 +25,7 @@ interface Movimentacao {
 })
 export class ConsultaMovimentacoes implements OnInit {
   private readonly http = inject(HttpClient);
+  private readonly changeDetector = inject(ChangeDetectorRef);
 
   readonly apiUrl = 'http://localhost:8080/movimentacao-financeira';
   movimentacoes: Movimentacao[] = [];
@@ -39,11 +44,13 @@ export class ConsultaMovimentacoes implements OnInit {
       next: (movimentacoes) => {
         this.movimentacoes = movimentacoes;
         this.carregando = false;
+        this.changeDetector.markForCheck();
       },
       error: () => {
         this.mensagemErro =
           'Não foi possível carregar as movimentações. Verifique se a API está disponível e tente novamente.';
         this.carregando = false;
+        this.changeDetector.markForCheck();
       },
     });
   }

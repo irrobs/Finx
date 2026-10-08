@@ -164,6 +164,24 @@ tbody tr:last-child td {
   color: #167447;
 }
 
+.income-row {
+  background: #fbfefc;
+}
+
+.expense-row {
+  background: #fffafa;
+}
+
+.income-mark {
+  background: #e2f3e9;
+  color: #167447;
+}
+
+.expense-mark {
+  background: #fce9e7;
+  color: #b42318;
+}
+
 .category {
   display: inline-block;
   padding: 5px 10px;
@@ -173,14 +191,42 @@ tbody tr:last-child td {
   font-size: 12px;
 }
 
+.transaction-type {
+  display: inline-block;
+  margin-left: 7px;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.income-type {
+  background: #e2f3e9;
+  color: #167447;
+}
+
+.expense-type {
+  background: #fce9e7;
+  color: #b42318;
+}
+
 .amount-heading,
 .amount {
   text-align: right;
 }
 
 .amount {
-  color: #167447;
   font-weight: 700;
+}
+
+.income-amount {
+  color: #167447;
+}
+
+.expense-amount {
+  color: #b42318;
 }
 
 .table-footer {

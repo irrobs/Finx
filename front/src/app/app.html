@@ -1,12 +1,22 @@
 <div class="app-shell">
   <aside class="sidebar">
-    <a class="brand" routerLink="/movimentacao-financeira" aria-label="Finx, início">
+    <a class="brand" routerLink="/" aria-label="Finx, início">
       <span class="brand-mark" aria-hidden="true">F</span>
       <span>finx</span>
     </a>
 
     <span class="nav-heading">MENU</span>
     <nav aria-label="Menu principal">
+      <a
+        class="nav-link"
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        ariaCurrentWhenActive="page"
+      >
+        <span class="nav-icon" aria-hidden="true">▦</span>
+        <span>Dashboard</span>
+      </a>
       <a
         class="nav-link"
         routerLink="/movimentacao-financeira"
@@ -24,6 +34,15 @@
       >
         <span class="nav-icon" aria-hidden="true">↗</span>
         <span>Consultar movimentações</span>
+      </a>
+      <a
+        class="nav-link"
+        routerLink="/cadastro-categoria"
+        routerLinkActive="active"
+        ariaCurrentWhenActive="page"
+      >
+        <span class="nav-icon" aria-hidden="true">＋</span>
+        <span>Cadastrar categoria</span>
       </a>
     </nav>
 

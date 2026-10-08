@@ -42,14 +42,41 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let movimentacao of movimentacoes">
+            <tr
+              *ngFor="let movimentacao of movimentacoes"
+              [class.income-row]="movimentacao.categoria?.tipo === 'Renda'"
+              [class.expense-row]="movimentacao.categoria?.tipo === 'Despesa'"
+            >
               <td class="description-cell">
-                <span class="description-mark" aria-hidden="true">↗</span>
+                <span
+                  class="description-mark"
+                  [class.income-mark]="movimentacao.categoria?.tipo === 'Renda'"
+                  [class.expense-mark]="movimentacao.categoria?.tipo === 'Despesa'"
+                  aria-hidden="true"
+                >
+                  {{ movimentacao.categoria?.tipo === 'Renda' ? '↑' : movimentacao.categoria?.tipo === 'Despesa' ? '↓' : '↗' }}
+                </span>
                 {{ movimentacao.descricao }}
               </td>
-              <td><span class="category">{{ movimentacao.categoria }}</span></td>
+              <td>
+                <span class="category">{{ movimentacao.categoria?.nome ?? 'Sem categoria' }}</span>
+                <span
+                  *ngIf="movimentacao.categoria?.tipo"
+                  class="transaction-type"
+                  [class.income-type]="movimentacao.categoria?.tipo === 'Renda'"
+                  [class.expense-type]="movimentacao.categoria?.tipo === 'Despesa'"
+                >
+                  {{ movimentacao.categoria.tipo }}
+                </span>
+              </td>
               <td>{{ movimentacao.data | date: 'dd/MM/yyyy' }}</td>
-              <td class="amount">{{ movimentacao.valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</td>
+              <td
+                class="amount"
+                [class.income-amount]="movimentacao.categoria?.tipo === 'Renda'"
+                [class.expense-amount]="movimentacao.categoria?.tipo === 'Despesa'"
+              >
+                {{ movimentacao.valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
+              </td>
             </tr>
           </tbody>
         </table>

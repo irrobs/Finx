@@ -14,12 +14,14 @@ public class MovimentacaoFinanceira {
     private String descricao;
     private LocalDate data;
     private Double valor;
-    private String categoria; //TODO: Mudar tipo para Categoria quando for criado o Enum
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 
     public MovimentacaoFinanceira() {
     }
 
-    public MovimentacaoFinanceira(Long id, String descricao, LocalDate data, Double valor, String categoria) {
+    public MovimentacaoFinanceira(Long id, String descricao, LocalDate data, Double valor, Categoria categoria) {
         this.id = id;
         this.descricao = descricao;
         this.data = data;
@@ -59,11 +61,11 @@ public class MovimentacaoFinanceira {
         this.valor = valor;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 }

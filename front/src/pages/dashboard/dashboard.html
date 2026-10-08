@@ -1,0 +1,108 @@
+<main class="page">
+  <section class="content" aria-labelledby="page-title">
+    <header class="page-header">
+      <div>
+        <span class="eyebrow">RESUMO FINANCEIRO</span>
+        <h1 id="page-title">Dashboard</h1>
+        <p>Veja suas rendas e despesas organizadas por categoria.</p>
+      </div>
+      <div class="header-actions">
+        <button type="button" class="refresh-button" (click)="carregarMovimentacoes()" [disabled]="carregando">
+          Atualizar
+        </button>
+        <a class="primary-link" routerLink="/movimentacao-financeira">＋ Nova movimentação</a>
+      </div>
+    </header>
+
+    <div *ngIf="carregando" class="state-card" role="status">Carregando seu resumo financeiro...</div>
+
+    <div *ngIf="mensagemErro" class="state-card error-state" role="alert">
+      <p>{{ mensagemErro }}</p>
+      <button type="button" class="refresh-button" (click)="carregarMovimentacoes()">Tentar novamente</button>
+    </div>
+
+    <ng-container *ngIf="!carregando && !mensagemErro">
+      <section class="summary-grid" aria-label="Resumo de rendas, despesas e saldo">
+        <article class="summary-card income-card">
+          <span class="summary-icon" aria-hidden="true">↑</span>
+          <div>
+            <p>Total de rendas</p>
+            <strong>{{ totalRendas | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</strong>
+          </div>
+        </article>
+        <article class="summary-card expense-card">
+          <span class="summary-icon" aria-hidden="true">↓</span>
+          <div>
+            <p>Total de despesas</p>
+            <strong>{{ totalDespesas | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</strong>
+          </div>
+        </article>
+        <article class="summary-card balance-card">
+          <span class="summary-icon" aria-hidden="true">＝</span>
+          <div>
+            <p>Saldo</p>
+            <strong>{{ saldo | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</strong>
+          </div>
+        </article>
+      </section>
+
+      <section class="category-card" aria-labelledby="categories-title">
+        <header class="section-header">
+          <div>
+            <h2 id="categories-title">Movimentações por categoria</h2>
+            <p>{{ movimentacoes.length }} {{ movimentacoes.length === 1 ? 'movimentação registrada' : 'movimentações registradas' }}</p>
+          </div>
+          <a routerLink="/consulta-movimentacoes">Ver movimentações <span aria-hidden="true">→</span></a>
+        </header>
+
+        <div *ngIf="categorias.length === 0" class="empty-state">
+          <span class="empty-icon" aria-hidden="true">↗</span>
+          <h3>Sem movimentações para resumir</h3>
+          <p>Cadastre uma movimentação para começar a acompanhar suas finanças.</p>
+          <a class="primary-link" routerLink="/movimentacao-financeira">Cadastrar movimentação</a>
+        </div>
+
+        <div *ngIf="categorias.length > 0" class="category-list">
+          <article class="category-item" *ngFor="let categoria of categorias">
+            <div class="category-info">
+              <div class="category-name">
+                <span
+                  class="type-dot"
+                  [class.income-dot]="categoria.tipo === 'Renda'"
+                  [class.expense-dot]="categoria.tipo === 'Despesa'"
+                ></span>
+                <div>
+                  <strong>{{ categoria.nome }}</strong>
+                  <span class="category-meta">{{ categoria.tipo }} · {{ categoria.quantidade }}
+                    {{ categoria.quantidade === 1 ? 'movimentação' : 'movimentações' }}</span>
+                </div>
+              </div>
+              <strong
+                class="category-total"
+                [class.income-total]="categoria.tipo === 'Renda'"
+                [class.expense-total]="categoria.tipo === 'Despesa'"
+              >
+                {{ categoria.total | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}
+              </strong>
+            </div>
+            <div
+              class="progress-track"
+              role="progressbar"
+              [attr.aria-label]="'Proporção do total da categoria ' + categoria.nome"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              [attr.aria-valuenow]="larguraBarra(categoria.total) | number: '1.0-0'"
+            >
+              <span
+                class="progress-fill"
+                [class.income-fill]="categoria.tipo === 'Renda'"
+                [class.expense-fill]="categoria.tipo === 'Despesa'"
+                [style.width.%]="larguraBarra(categoria.total)"
+              ></span>
+            </div>
+          </article>
+        </div>
+      </section>
+    </ng-container>
+  </section>
+</main>

@@ -46,14 +46,24 @@
 
       <div class="field">
         <label for="categoria">Categoria</label>
-        <input
+        <select
           id="categoria"
           name="categoria"
-          type="text"
-          placeholder="Ex.: Moradia, alimentação"
           [(ngModel)]="movimentacao.categoria"
           required
-        />
+          [disabled]="carregandoCategorias || categorias.length === 0"
+        >
+          <option [ngValue]="null" disabled>
+            {{ carregandoCategorias ? 'Carregando categorias...' : 'Selecione uma categoria' }}
+          </option>
+          <option *ngFor="let categoria of categorias" [ngValue]="categoria">
+            {{ categoria.nome }}
+          </option>
+        </select>
+        <small *ngIf="categoriaErro" role="alert">{{ categoriaErro }}</small>
+        <small *ngIf="!carregandoCategorias && !categoriaErro && categorias.length === 0">
+          Cadastre uma categoria antes de registrar movimentações.
+        </small>
       </div>
 
       <p
