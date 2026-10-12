@@ -1,6 +1,7 @@
 package dev.Finx.service;
 
 import dev.Finx.model.MovimentacaoFinanceira;
+import dev.Finx.model.Usuario;
 import dev.Finx.repository.CategoriaRepository;
 import dev.Finx.repository.MovimentacaoFinanceiraRepository;
 import org.springframework.http.HttpStatus;
@@ -21,17 +22,24 @@ public class MovimentacaoFinanceiraService {
         this.categoriaRepository = categoriaRepository;
     }
 
-    public List<MovimentacaoFinanceira> getAll() {return repository.findAll();}
+    public List<MovimentacaoFinanceira> getAll(Usuario usuario) {
+        return repository.findAllByUsuario_Id(usuario.getId());
+    }
 
-    public MovimentacaoFinanceira cadastrar(MovimentacaoFinanceira movimentacaoFinanceira) {
+    public MovimentacaoFinanceira cadastrar(MovimentacaoFinanceira movimentacaoFinanceira, Usuario usuario) {
         if (movimentacaoFinanceira.getCategoria() == null || movimentacaoFinanceira.getCategoria().getId() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Categoria é obrigatória");
         }
         Long categoriaId = movimentacaoFinanceira.getCategoria().getId();
-        movimentacaoFinanceira.setCategoria(categoriaRepository.findById(categoriaId)
+        movimentacaoFinanceira.setCategoria(categoriaRepository.findByIdAndUsuario_Id(categoriaId, usuario.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria não encontrada")));
+        movimentacaoFinanceira.setUsuario(usuario);
         return repository.save(movimentacaoFinanceira);
     }
 
-    public void deletar(Long id) {repository.deleteById(id);}
+    public void deletar(Long id, Usuario usuario) {
+        MovimentacaoFinanceira movimentacao = repository.findByIdAndUsuario_Id(id, usuario.getId())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Movimentação não encontrada"));
+        repository.delete(movimentacao);
+    }
 }

@@ -1,0 +1,29 @@
+<main class="auth-page">
+  <section class="auth-card" aria-labelledby="page-title">
+    <a class="auth-brand" routerLink="/">finx</a>
+    <header>
+      <span class="auth-eyebrow">BEM-VINDO DE VOLTA</span>
+      <h1 id="page-title">Entrar na sua conta</h1>
+      <p>Acesse suas categorias e movimentações financeiras.</p>
+    </header>
+
+    <form #form="ngForm" (ngSubmit)="entrar(form)">
+      <div class="auth-field">
+        <label for="usuario">Usuário</label>
+        <input id="usuario" name="usuario" [(ngModel)]="credenciais.usuario" autocomplete="username" required />
+      </div>
+      <div class="auth-field">
+        <label for="senha">Senha</label>
+        <input id="senha" name="senha" type="password" [(ngModel)]="credenciais.senha"
+               autocomplete="current-password" required />
+      </div>
+      <p class="auth-feedback" [class.auth-error]="erro" role="status" aria-live="polite" *ngIf="mensagem">
+        {{ mensagem }}
+      </p>
+      <button type="submit" [disabled]="form.invalid || enviando">
+        {{ enviando ? 'Entrando...' : 'Entrar' }}
+      </button>
+    </form>
+    <p class="auth-switch">Ainda não tem conta? <a routerLink="/registrar">Criar usuário</a></p>
+  </section>
+</main>

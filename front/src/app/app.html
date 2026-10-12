@@ -1,4 +1,5 @@
 <div class="app-shell">
+  @if (auth.estaAutenticado) {
   <aside class="sidebar">
     <a class="brand" routerLink="/" aria-label="Finx, início">
       <span class="brand-mark" aria-hidden="true">F</span>
@@ -46,10 +47,14 @@
       </a>
     </nav>
 
-    <div class="sidebar-footer">Organize suas finanças</div>
+    <div class="sidebar-footer">
+      <span class="user-identity">Logado como <strong>{{ auth.nomeUsuario }}</strong></span>
+      <button class="logout-button" type="button" (click)="sair()" aria-label="Sair da conta">Sair</button>
+    </div>
   </aside>
+  }
 
-  <div class="main-content">
+  <div class="main-content" [class.main-content-auth]="!auth.estaAutenticado">
     <router-outlet></router-outlet>
   </div>
 </div>

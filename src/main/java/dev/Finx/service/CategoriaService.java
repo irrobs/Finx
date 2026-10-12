@@ -2,6 +2,7 @@ package dev.Finx.service;
 
 import dev.Finx.model.Categoria;
 import dev.Finx.repository.CategoriaRepository;
+import dev.Finx.model.Usuario;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,28 +18,29 @@ public class CategoriaService {
         this.repository = repository;
     }
 
-    public List<Categoria> getAll() {
-        return repository.findAll();
+    public List<Categoria> getAll(Usuario usuario) {
+        return repository.findAllByUsuario_Id(usuario.getId());
     }
 
-    public Categoria getById(Long id) {
-        return repository.findById(id)
+    public Categoria getById(Long id, Usuario usuario) {
+        return repository.findByIdAndUsuario_Id(id, usuario.getId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Categoria não encontrada"));
     }
 
-    public Categoria cadastrar(Categoria categoria) {
+    public Categoria cadastrar(Categoria categoria, Usuario usuario) {
+        categoria.setUsuario(usuario);
         return repository.save(categoria);
     }
 
-    public Categoria alterar(Long id, Categoria categoria) {
-        Categoria categoriaExistente = getById(id);
+    public Categoria alterar(Long id, Categoria categoria, Usuario usuario) {
+        Categoria categoriaExistente = getById(id, usuario);
         categoriaExistente.setNome(categoria.getNome());
         categoriaExistente.setTipo(categoria.getTipo());
         return repository.save(categoriaExistente);
     }
 
-    public void deletar(Long id) {
-        Categoria categoria = getById(id);
+    public void deletar(Long id, Usuario usuario) {
+        Categoria categoria = getById(id, usuario);
         repository.delete(categoria);
     }
 }

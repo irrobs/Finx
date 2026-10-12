@@ -1,0 +1,31 @@
+<main class="auth-page">
+  <section class="auth-card" aria-labelledby="page-title">
+    <a class="auth-brand" routerLink="/">finx</a>
+    <header>
+      <span class="auth-eyebrow">COMECE A ORGANIZAR</span>
+      <h1 id="page-title">Criar usuário</h1>
+      <p>Use apenas um nome de usuário e uma senha para criar sua conta.</p>
+    </header>
+
+    <form #form="ngForm" (ngSubmit)="cadastrar(form)">
+      <div class="auth-field">
+        <label for="usuario">Usuário</label>
+        <input id="usuario" name="usuario" [(ngModel)]="credenciais.usuario" autocomplete="username"
+               minlength="3" maxlength="50" required />
+      </div>
+      <div class="auth-field">
+        <label for="senha">Senha</label>
+        <input id="senha" name="senha" type="password" [(ngModel)]="credenciais.senha"
+               autocomplete="new-password" minlength="8" maxlength="128" required />
+        <small>A senha deve ter pelo menos 8 caracteres.</small>
+      </div>
+      <p class="auth-feedback" [class.auth-error]="erro" role="status" aria-live="polite" *ngIf="mensagem">
+        {{ mensagem }}
+      </p>
+      <button type="submit" [disabled]="form.invalid || enviando">
+        {{ enviando ? 'Criando...' : 'Criar usuário' }}
+      </button>
+    </form>
+    <p class="auth-switch">Já tem uma conta? <a routerLink="/login">Entrar</a></p>
+  </section>
+</main>
