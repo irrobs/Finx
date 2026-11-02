@@ -19,7 +19,7 @@ describe('MovimentacaoFinanceira', () => {
     fixture = TestBed.createComponent(MovimentacaoFinanceira);
     component = fixture.componentInstance;
     fixture.detectChanges();
-    httpTestingController.expectOne('http://localhost:8080/categoria').flush([]);
+    httpTestingController.expectOne('https://finx-2f0m.onrender.com/categoria').flush([]);
     await fixture.whenStable();
   });
 

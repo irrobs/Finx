@@ -19,8 +19,8 @@ export class MovimentacaoFinanceira implements OnInit {
   private readonly http = inject(HttpClient);
   private readonly changeDetector = inject(ChangeDetectorRef);
 
-  readonly apiUrl = 'http://localhost:8080/movimentacao-financeira';
-  readonly categoriasUrl = 'http://localhost:8080/categoria';
+  readonly apiUrl = 'https://finx-2f0m.onrender.com/movimentacao-financeira';
+  readonly categoriasUrl = 'https://finx-2f0m.onrender.com/categoria';
   categorias: Categoria[] = [];
   carregandoCategorias = true;
   categoriaErro = '';

@@ -23,7 +23,7 @@ describe('Dashboard', () => {
   afterEach(() => httpTestingController.verify());
 
   it('should summarize movements by category and type', () => {
-    httpTestingController.expectOne('http://localhost:8080/movimentacao-financeira').flush([
+    httpTestingController.expectOne('https://finx-2f0m.onrender.com/movimentacao-financeira').flush([
       { id: 1, descricao: 'Salário', data: '2026-10-01', valor: 2500, categoria: { id: 1, nome: 'Salário', tipo: 'Renda' } },
       { id: 2, descricao: 'Aluguel', data: '2026-10-02', valor: 900, categoria: { id: 2, nome: 'Moradia', tipo: 'Despesa' } },
     ]);

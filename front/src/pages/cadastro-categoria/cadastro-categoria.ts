@@ -13,7 +13,7 @@ export class CadastroCategoria {
   private readonly http = inject(HttpClient);
   private readonly changeDetector = inject(ChangeDetectorRef);
 
-  readonly apiUrl = 'http://localhost:8080/categoria';
+  readonly apiUrl = 'https://finx-2f0m.onrender.com/categoria';
   categoria = {
     nome: '',
     tipo: '',

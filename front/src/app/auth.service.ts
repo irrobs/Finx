@@ -20,7 +20,7 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly router = inject(Router);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-  private readonly apiUrl = 'http://localhost:8080/auth';
+  private readonly apiUrl = 'https://finx-2f0m.onrender.com/auth';
 
   get token(): string | null {
     return this.isBrowser ? sessionStorage.getItem('finx-token') : null;
